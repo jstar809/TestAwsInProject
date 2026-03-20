@@ -1,14 +1,8 @@
-buildscript {
-    ext {
-        queryDslVersion = "5.0.0"
-    }
-}
 
 plugins {
     id 'org.springframework.boot' version '2.7.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
-    id "com.ewerk.gradle.plugins.querydsl" version '1.0.10'
 }
 
 group = 'org.zerock'
@@ -53,26 +47,4 @@ tasks.named('test') {
     useJUnitPlatform()
 }
 
-// QueryDSL 설정
-def querydslDir = "$buildDir/generated/querydsl"
 
-querydsl {
-    jpa = true
-    querydslSourcesDir = querydslDir
-}
-
-sourceSets {
-    main {
-        java {
-            srcDirs = ["$projectDir/src/main/java", querydslDir]
-        }
-    }
-}
-
-configurations {
-    querydsl.extendsFrom compileClasspath
-}
-
-compileQuerydsl {
-    options.annotationProcessorPath = configurations.querydsl
-}
